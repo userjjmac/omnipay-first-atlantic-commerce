@@ -1,5 +1,5 @@
 {
-    "name": "strikewood/omnipay-first-atlantic-commerce",
+    "name": "bitpiston/omnipay-first-atlantic-commerce",
     "description": "First Atlantic Commerce driver for the Omnipay PHP payment processing library",
     "keywords": [
         "first atlantic commerce",
@@ -8,12 +8,12 @@
         "omnipay",
         "gateway"
     ],
-    "homepage": "https://github.com/strikewood/omnipay-first-atlantic-commerce",
+    "homepage": "https://github.com/bitpiston/omnipay-first-atlantic-commerce",
     "license": "MIT",
     "authors": [
         {
             "name": "Jan Pingel",
-            "email": "jan@strikewood.com"
+            "email": "jpingel@bitpiston.com"
         }
     ],
     "require": {
