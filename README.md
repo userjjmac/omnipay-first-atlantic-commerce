@@ -2,9 +2,9 @@
 
 **First Atlantic Commerce driver for the Omnipay PHP payment processing library**
 
-[![Source Code](http://img.shields.io/badge/source-strikewood/omnipay--first--atlantic--commerce-blue.svg?style=flat-square)](https://github.com/strikewood/omnipay-first-atlantic-commerce) [![Latest Version](https://img.shields.io/github/release/strikewood/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://github.com/strikewood/omnipay-first-atlantic-commerce/releases) [![Software License](https://img.shields.io/github/license/strikewood/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://github.com/Strikewood/omnipay-first-atlantic-commerce/blob/master/LICENSE)
+[![Source Code](http://img.shields.io/badge/source-bitpiston/omnipay--first--atlantic--commerce-blue.svg?style=flat-square)](https://github.com/bitpiston/omnipay-first-atlantic-commerce) [![Latest Version](https://img.shields.io/github/release/bitpiston/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://github.com/bitpiston/omnipay-first-atlantic-commerce/releases) [![Software License](https://img.shields.io/github/license/bitpiston/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://github.com/bitpiston/omnipay-first-atlantic-commerce/blob/master/LICENSE)
 
-[![Build Status](https://img.shields.io/scrutinizer/build/g/strikewood/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://scrutinizer-ci.com/g/Strikewood/omnipay-first-atlantic-commerce/build-status/master) [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/strikewood/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://scrutinizer-ci.com/g/Strikewood/omnipay-first-atlantic-commerce/?branch=master) [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/strikewood/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://scrutinizer-ci.com/g/Strikewood/omnipay-first-atlantic-commerce/?branch=master) [![Total Downloads](https://img.shields.io/packagist/dt/strikewood/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://packagist.org/packages/Strikewood/omnipay-first-atlantic-commerce/)
+[![Total Downloads](https://img.shields.io/packagist/dt/bitpiston/omnipay-first-atlantic-commerce.svg?style=flat-square)](https://packagist.org/packages/bitpiston/omnipay-first-atlantic-commerce/)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements First Atlantic Commerce support for Omnipay.
@@ -15,7 +15,7 @@ Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply
 to your `composer.json` file and update or install directly with composer require:
 
 ```
-$ php composer.phar require strikewood/omnipay-first-atlantic-commerce:dev-master
+$ composer require bitpiston/omnipay-first-atlantic-commerce
 ```
 This package strives to use Semantic Versioning as explained [here](http://semver.org/).
 
