@@ -2,13 +2,13 @@
 
 namespace Omnipay\FirstAtlanticCommerce\Message;
 
-use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\FirstAtlanticCommerce\CreditCard;
 use Omnipay\FirstAtlanticCommerce\ParameterTrait;
 use SimpleXMLElement;
 
-abstract class AbstractRequest extends BaseAbstractRequest
+abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     use ParameterTrait;
 
@@ -75,21 +75,30 @@ abstract class AbstractRequest extends BaseAbstractRequest
     abstract protected function newResponse($xml);
 
     /**
-     * Send the request payload
+     * Get HTTP Method.
      *
-     * @param array $data Request payload
+     * This is nearly always POST but can be over-ridden in sub classes.
      *
-     * @return ResponseInterface
+     * @return string
+     */
+    public function getHttpMethod()
+    {
+        return 'POST';
+    }
+
+    /**
+     * @param mixed $data
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function sendData($data)
     {
-        $httpResponse = $this->httpClient->post(
-            $this->getEndpoint(),
-            ['Content-Type' => 'text/xml; charset=utf-8'],
-            $this->xmlSerialize($data)
-        )->send();
+        $httpResponse = $this->httpClient->request($this->getHttpMethod(),$this->getEndpoint(), ['Content-Type' => 'text/xml; charset=utf-8'], $this->xmlSerialize($data));
+        return $this->createResponse($httpResponse->getBody()->getContents(), $httpResponse->getHeaders());
+    }
 
-        return $this->response = $this->newResponse( $httpResponse->xml() );
+    protected function createResponse($data, $headers = [])
+    {
+        return $this->response = new Response($this, $data, $headers);
     }
 
     /**

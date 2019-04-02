@@ -48,7 +48,7 @@ abstract class AbstractTransactionModificationRequest extends AbstractRequest
      *
      * @return string Endpoint URL
      */
-    protected function getEndpoint()
+    public function getEndpoint()
     {
         return parent::getEndpoint() . 'TransactionModification';
     }

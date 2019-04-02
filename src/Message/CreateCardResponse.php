@@ -12,10 +12,10 @@ use Omnipay\FirstAtlanticCommerce\Message\AbstractResponse;
 class CreateCardResponse extends AbstractResponse
 {
     /**
-     * Constructor
-     *
+     * CreateCardResponse constructor.
      * @param RequestInterface $request
-     * @param string $data
+     * @param mixed $data
+     * @throws InvalidResponseException
      */
     public function __construct(RequestInterface $request, $data)
     {

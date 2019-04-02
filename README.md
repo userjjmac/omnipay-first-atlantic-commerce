@@ -90,3 +90,25 @@ you can subscribe to.
 
 If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/Strikewood/omnipay-first-atlantic-commerce/issues),
 or better yet, fork the library and submit a pull request.
+
+
+In setup
+```php
+$this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+        $this->gateway->setMerchantId('123');
+        $this->gateway->setMerchantPassword('abc1233');
+
+        $this->options = [
+            'amount' => '10.00',
+            'currency' => 'USD',
+            'transactionId' => '1234'
+        ];
+```
+
+```php
+$response = $this->gateway->capture($this->options)->send();
+
+$response = $this->gateway->refund($this->options)->send();
+
+$this->getParameter('')
+```

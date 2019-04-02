@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace Omnipay\FirstAtlanticCommerce\Message;
 
 
 use Omnipay\FirstAtlanticCommerce\Gateway;
@@ -21,18 +21,24 @@ class StatusTest extends GatewayTestCase
     private $statusOptions;
 
     /**
+     * @var StatusRequest
+     */
+    private $request;
+
+    /**
      * Setup the gateway and status options for testing.
      */
     public function setUp()
     {
-        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
-
-        $this->gateway->setMerchantId('123');
-        $this->gateway->setMerchantPassword('abc123');
-
-        $this->statusOptions = [
-            'transactionId' => '1234'
-        ];
+        $this->request = new StatusRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request->initialize(
+            array(
+                'transactionId' => '1234',
+                'merchantId'=>123,
+                'merchantPassword'=>'abc123',
+                'acquirerId'=>'464748'
+            )
+        );
     }
 
     /**
@@ -42,7 +48,8 @@ class StatusTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('StatusSuccess.txt');
 
-        $response = $this->gateway->status($this->statusOptions)->send();
+        /** @var \Omnipay\FirstAtlanticCommerce\Message\Response $response */
+        $response = $this->request->send();
 
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('Transaction is approved.', $response->getMessage());
@@ -55,7 +62,8 @@ class StatusTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('StatusFailure.txt');
 
-        $response = $this->gateway->status($this->statusOptions)->send();
+        /** @var \Omnipay\FirstAtlanticCommerce\Message\Response $response */
+        $response = $this->request->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertEquals('No Response', $response->getMessage());

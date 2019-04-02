@@ -1,0 +1,24 @@
+HTTP/1.1 201 OK
+Date: Tue, 11 Feb 2018 02:34:58 GMT
+Content-type: text/html; charset=utf-8
+
+<Authorize3DSRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema- instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <CardDetails>
+        <CardCVV2>234</CardCVV2>
+        <CardExpiryDate>1220</CardExpiryDate> <CardNumber>4111111111111111</CardNumber>
+        <IssueNumber />
+        <StartDate /> <DocumentNumber>ORD_88800033_1548101493137</DocumentNumber> <Installments>0</Installments>
+    </CardDetails>
+    <MerchantResponseURL>https://sandbox-api.3dsintegrator.com/authenticate/response</MerchantResponseURL>
+    <TransactionDetails>
+        <AcquirerId>464748</AcquirerId> <Amount>000000000100</Amount>
+        <Currency>780</Currency> <CurrencyExponent>2</CurrencyExponent>
+        <CustomData />
+        <MerchantId>88800033</MerchantId>
+        <OrderNumber>ORD_88800033_1548101493137</OrderNumber>
+        <Signature>bv2Earxsq0UqWzjwh4vGG5kmTvo=</Signature>
+        <SignatureMethod>SHA1</SignatureMethod>
+        <TransactionCode>0</TransactionCode>
+        <CustomerReference>FAC Web Tools FACPG2: 88800033</CustomerReference>
+    </TransactionDetails>
+</Authorize3DSRequest>

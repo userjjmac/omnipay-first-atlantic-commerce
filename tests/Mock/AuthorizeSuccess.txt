@@ -1,8 +1,8 @@
 HTTP/1.1 201 OK
-Date: Tue, 11 Feb 2014 02:34:58 GMT
+Date: Tue, 11 Feb 2018 02:34:58 GMT
 Content-type: text/html; charset=utf-8
 
-<AuthorizeResponse xmlns="http://schemas.firstatlanticcommerce.com/gateway/data">
+<AuthorizeResponse xmlns="http://schemas.firstatlanticcommerce.com/gateway/data/">
     <ExtensionData/>
     <AcquirerId>464748</AcquirerId>
     <CreditCardTransactionResults>

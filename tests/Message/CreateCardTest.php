@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace Omnipay\FirstAtlanticCommerce\Message;
 
 
 use Omnipay\FirstAtlanticCommerce\Gateway;
