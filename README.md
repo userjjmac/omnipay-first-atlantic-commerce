@@ -92,23 +92,50 @@ If you believe you have found a bug, please report it using the [GitHub issue tr
 or better yet, fork the library and submit a pull request.
 
 
+## Updates
+The unit testing was cleaned up by separating the Transaction Modifications Operations as well as modifying the already existing test to return the mock data.
+A Gateway test was added to replicate the functionality of the real Gateway. This test will actually hit the remote endpoints when the the correct TEST Merchant ID
+and Password are provided (ensure that testMode is set to true). See test parameters below:
+
 In setup
 ```php
+//set up AuthorizeRequest
+$this->request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
+$this->request->initialize(
+    array(
+        'amount' => '10.00',
+        'currency' => 'TTD',
+        'transactionId' => '1234',
+        'card' => $this->getValidCard(),
+        'description' => 'Order #43',
+        'metadata' => array(
+            'foo' => 'bar',
+        ),
+        'merchantId'=>123,
+        'merchantPassword'=>'abc123',
+        'acquirerId'=>'464748',
+        'testMode'=>true
+    )
+);
+
+//set up gateway
 $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
-        $this->gateway->setMerchantId('123');
-        $this->gateway->setMerchantPassword('abc1233');
+$this->gateway->setMerchantId('123');
+$this->gateway->setMerchantPassword('abc123');
 
-        $this->options = [
-            'amount' => '10.00',
-            'currency' => 'USD',
-            'transactionId' => '1234'
-        ];
+//setup payment details
+$this->purchaseOptions = [
+    'amount'        => '10.00',
+    'currency'      => 'TTD',
+    'transactionId' => '1237',
+    'card'          => $this->getValidCard(),
+    'testMode'=>true
+];
 ```
 
+Below is an example of authorize request. (See tests/GatewayTest.php for more)
 ```php
-$response = $this->gateway->capture($this->options)->send();
-
-$response = $this->gateway->refund($this->options)->send();
-
-$this->getParameter('')
+$response = $this->gateway->authorize($this->purchaseOptions)->send();
 ```
+
+Lastly a single response object (src/Message/Response.php) was added to handle responses.

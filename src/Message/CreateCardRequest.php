@@ -67,7 +67,7 @@ class CreateCardRequest extends AbstractRequest
     /**
      * Set the customer reference.
      *
-     * @param string $value
+     * @return string $value
      */
     public function setCustomerReference($value)
     {

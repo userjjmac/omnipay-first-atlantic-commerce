@@ -3,6 +3,7 @@
 
 namespace Omnipay\FirstAtlanticCommerce\Message;
 
+
 use Omnipay\Tests\TestCase;
 
 class CaptureRequestTest extends TestCase
@@ -19,7 +20,7 @@ class CaptureRequestTest extends TestCase
         $this->request->initialize(
             array(
                 'amount' => '10.00',
-                'currency' => 'USD',
+                'currency' => 'TTD',
                 'transactionId' => '1234',
                 'merchantId'=>123,
                 'merchantPassword'=>'abc123',
@@ -57,7 +58,7 @@ class CaptureRequestTest extends TestCase
 
     public function testEndpoint()
     {
-        //test mode set to true
+        //test mode is set true in setUp()
         $this->assertSame('https://ecm.firstatlanticcommerce.com/PGServiceXML/TransactionModification', $this->request->getEndpoint());
     }
 

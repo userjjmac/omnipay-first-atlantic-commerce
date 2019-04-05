@@ -144,25 +144,6 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param array $parameters
-     *
-     * @return \Omnipay\FirstAtlanticCommerce\Message\FetchTransactionRequest
-     */
-    public function fetchTransaction(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\FirstAtlanticCommerce\Message\FetchTransactionRequest', $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     * @return \Omnipay\FirstAtlanticCommerce\Message\FetchBalanceTransactionRequest
-     */
-    public function fetchBalanceTransaction(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\FirstAtlanticCommerce\Message\FetchBalanceTransactionRequest', $parameters);
-    }
-
-    /**
      *  Retrieve the status of any previous transaction.
      *
      * @param array $parameters
@@ -225,6 +206,23 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\FirstAtlanticCommerce\Message\DeleteCardRequest', $parameters);
     }
+
+    /**
+     *
+     * The Cancel Recurring Operation is used to cancel/disable a Recurring transaction.
+     * This will prevent the Recurring cycle from executing in the future. This does
+     * not refund or reverse an Authorization, but cancels (prevents) any future
+     * Recurring payments in a cycle. The Order ID and Amount must match that of
+     * the original Recurring Authorization request.
+     *
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function cancelRecurring(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\FirstAtlanticCommerce\Message\CancelRecurringRequest', $parameters);
+    }
+
 
 
 }

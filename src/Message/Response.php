@@ -91,5 +91,15 @@ class Response extends AbstractResponse
         return null;
     }
 
+    /**
+     * Return card reference
+     *
+     * @return string
+     */
+    public function getCardReference()
+    {
+        return isset($this->data['Token']) ? $this->data['Token'] : null;
+    }
+
 
 }

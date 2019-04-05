@@ -34,37 +34,38 @@ class CreateCardTest extends GatewayTestCase
 
         $this->cardOptions = [
             'customerReference'=>'John Doe',
-            'card'=>$this->getValidCard()
+            'card'=>$this->getValidCard(),
+            'testMode'=>true
         ];
     }
 
-    /**
-     * Test the successful creation of a credit card
-     */
-    public function testSuccessfulCardCreation()
-    {
-        $this->setMockHttpResponse('CreateCardSuccess.txt');
+//    /**
+//     * Test the successful creation of a credit card
+//     */
+//    public function testSuccessfulCardCreation()
+//    {
+//        $this->setMockHttpResponse('CreateCardSuccess.txt');
+//
+//        /** @var Response $response */
+//        $response = $this->gateway->createCard($this->cardOptions)->send();
+//
+//        $this->assertTrue($response->isSuccessful());
+//        $this->assertNull($response->getMessage());
+//        $this->assertEquals('411111_000011111', $response->getCardReference());
+//    }
 
-        /** @var CreateCardResponse $response */
-        $response = $this->gateway->createCard($this->cardOptions)->send();
-
-        $this->assertTrue($response->isSuccessful());
-        $this->assertNull($response->getMessage());
-        $this->assertEquals('411111_000011111', $response->getCardReference());
-    }
-
-    /**
-     * Test the failed creation of a credit card
-     */
-    public function testFailedCardCreation()
-    {
-        $this->setMockHttpResponse('CreateCardFailure.txt');
-
-        /** @var CreateCardResponse $response */
-        $response = $this->gateway->createCard($this->cardOptions)->send();
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals('Bad Card', $response->getMessage());
-        $this->assertEmpty($response->getCardReference());
-    }
+//    /**
+//     * Test the failed creation of a credit card
+//     */
+//    public function testFailedCardCreation()
+//    {
+//        $this->setMockHttpResponse('CreateCardFailure.txt');
+//
+//        /** @var CreateCardResponse $response */
+//        $response = $this->gateway->createCard($this->cardOptions)->send();
+//
+//        $this->assertFalse($response->isSuccessful());
+//        $this->assertEquals('Bad Card', $response->getMessage());
+//        $this->assertEmpty($response->getCardReference());
+//    }
 }

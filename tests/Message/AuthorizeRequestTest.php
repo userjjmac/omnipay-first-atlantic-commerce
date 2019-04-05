@@ -2,15 +2,8 @@
 
 namespace Omnipay\FirstAtlanticCommerce\Message;
 
-//require __DIR__ . "/../vendor/omnipay/tests/src/GatewayTestCase.php";
-//require __DIR__ . "/../vendor/omnipay/tests/src/TestCase.php";
 
-use GuzzleHttp\Psr7\Response;
-use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\FirstAtlanticCommerce\Gateway;
-use Omnipay\FirstAtlanticCommerce\Message\AuthorizeRequest;
-use Omnipay\FirstAtlanticCommerce\Message\AuthorizeResponse;
-use Omnipay\Tests\GatewayTestCase;
 use Omnipay\Tests\TestCase;
 
 /**
@@ -34,10 +27,11 @@ class AuthorizeRequestTest extends TestCase
     private $request;
 
     /**
-     * Setup the gateway and the purchase options to be used for testing.
+     * Setup the request, gateway and the purchase options to be used for testing.
      */
     public function setUp()
     {
+        //set up AuthorizeRequest
         $this->request = new AuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
@@ -45,7 +39,7 @@ class AuthorizeRequestTest extends TestCase
                 'currency' => 'TTD',
                 'transactionId' => '1234',
                 'card' => $this->getValidCard(),
-                'description' => 'Order #42',
+                'description' => 'Order #43',
                 'metadata' => array(
                     'foo' => 'bar',
                 ),
@@ -55,6 +49,20 @@ class AuthorizeRequestTest extends TestCase
                 'testMode'=>true
             )
         );
+
+        //set up gateway
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+        $this->gateway->setMerchantId('123');
+        $this->gateway->setMerchantPassword('abc123');
+        
+        //setup payment details
+        $this->purchaseOptions = [
+            'amount'        => '10.00',
+            'currency'      => 'TTD',
+            'transactionId' => '1237',
+            'card'          => $this->getValidCard(),
+            'testMode'=>true
+        ];
     }
 
     /**
@@ -83,7 +91,7 @@ class AuthorizeRequestTest extends TestCase
 
         $this->assertSame(464748, (int)$data['TransactionDetails']['AcquirerId']);
         $this->assertSame(1000, (int)$data['TransactionDetails']['Amount']);
-        $this->assertSame(840, (int)$data['TransactionDetails']['Currency']);
+        $this->assertSame(780, (int)$data['TransactionDetails']['Currency']);
         $this->assertSame(123, (int)$data['TransactionDetails']['MerchantId']);
     }
 
@@ -93,8 +101,6 @@ class AuthorizeRequestTest extends TestCase
         
         /** @var \Omnipay\FirstAtlanticCommerce\Message\Response $response */
         $response = $this->request->send();
-
-
 
         $this->assertEquals(2, $response->getReasonCode());
         $this->assertEquals('Transaction is declined.', $response->getMessage());
@@ -110,17 +116,6 @@ class AuthorizeRequestTest extends TestCase
         $this->assertSame($card['number'], $data['CardDetails']['CardNumber']);
     }
 
-    public function testDataWithToken()
-    {
-        $this->request->setCustomerReference('abc');
-        $this->request->setToken('xyz');
-        $data = $this->request->getData();
-
-        $this->assertSame('abc', $data['customer']);
-        $this->assertSame('xyz', $data['source']);
-    }
-
-
 
     /**
      * Test the country formatting functionality
@@ -128,7 +123,9 @@ class AuthorizeRequestTest extends TestCase
     public function testFormatCountry()
     {
         //Alpha2
+        //Note that getValidCard() gets a test US card
         $card = $this->getValidCard();
+
         $requestData = $this->getRequestData($card);
         $this->assertEquals(840, $requestData['BillingDetails']['BillToCountry']);
 
@@ -205,70 +202,4 @@ class AuthorizeRequestTest extends TestCase
         return $requestData;
     }
 
-    /**
-     * Test a successful purchase. Purchases act the same as authorizations. They just have a different transaction code.
-     * So the tests are basically the same.
-     */
-    public function testPurchaseSuccess()
-    {
-        $this->setMockHttpResponse('AuthorizeSuccess.txt');
-
-        /** @var AuthorizeResponse $response */
-        $response = $this->gateway->purchase($this->purchaseOptions)->send();
-
-        $this->assertTrue($response->isSuccessful());
-        $this->assertEquals(1, $response->getCode());
-        $this->assertEquals('Transaction is approved.', $response->getMessage());
-        $this->assertEquals(307916543749, $response->getTransactionReference());
-        $this->assertEquals(1234, $response->getTransactionId());
-    }
-
-    /**
-     * Test a failed purchase. Purchases act the same as authorizations. They just have a different transaction code.
-     * So the tests are basically the same.
-     */
-    public function testPurchaseFailure()
-    {
-        $this->setMockHttpResponse('AuthorizeFailure.txt');
-
-        $response = $this->gateway->purchase($this->purchaseOptions)->send();
-
-        $this->assertFalse($response->isSuccessful());
-        $this->assertEquals(2, $response->getCode());
-        $this->assertEquals('Transaction is declined.', $response->getMessage());
-        $this->assertEquals(307916543749, $response->getTransactionReference());
-    }
-
-    public function testAuthorizeWithTokenization()
-    {
-        $this->setMockHttpResponse('AuthorizeToken.txt');
-
-        /** @var AuthorizeResponse $response */
-        $response = $this->gateway->authorize($this->purchaseOptions)->send();
-
-        $this->assertTrue($response->isSuccessful());
-        $this->assertNotEmpty($response->getCardReference());
-    }
-
-    public function testAuthorize(){
-        {
-
-            $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
-            $this->gateway->setMerchantId('88800993');
-            $this->gateway->setMerchantPassword('');
-
-            $options = [
-                'amount'        => '10.00',
-                'currency'      => 'TTD',
-                'transactionId' => '1234',
-                'card'          => $this->getValidCard(),
-                'testMode'=>true
-
-            ];
-
-
-            $response = $this->gateway->authorize($options)->send();
-            var_dump($response->getData());die();
-        }
-    }
 }

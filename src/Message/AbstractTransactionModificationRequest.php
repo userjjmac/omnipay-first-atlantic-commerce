@@ -72,6 +72,6 @@ abstract class AbstractTransactionModificationRequest extends AbstractRequest
      */
     protected function newResponse($xml)
     {
-        return new TransactionModificationResponse($this, $xml);
+        return new Response($this, $xml);
     }
 }

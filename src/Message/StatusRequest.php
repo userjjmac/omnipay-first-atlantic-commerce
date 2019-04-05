@@ -49,10 +49,10 @@ class StatusRequest extends AbstractRequest
      *
      * @param \SimpleXMLElement $xml Response xml object
      *
-     * @return StatusResponse
+     * @return Response
      */
     protected function newResponse($xml)
     {
-        return new StatusResponse($this, $xml);
+        return new Response($this, $xml);
     }
 }

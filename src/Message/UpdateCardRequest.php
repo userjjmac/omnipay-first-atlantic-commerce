@@ -68,7 +68,7 @@ class UpdateCardRequest extends AbstractRequest
     /**
      * Set the customer reference.
      *
-     * @param string $value
+     * @return  string $value
      */
     public function setCustomerReference($value)
     {
@@ -90,11 +90,11 @@ class UpdateCardRequest extends AbstractRequest
      *
      * @param \SimpleXMLElement $xml Response xml object
      *
-     * @return UpdateCardResponse
+     * @return Response
      */
     protected function newResponse($xml)
     {
-        return new UpdateCardResponse($this, $xml);
+        return new Response($this, $xml);
     }
 
 }
