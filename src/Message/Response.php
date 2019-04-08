@@ -47,6 +47,9 @@ class Response extends AbstractResponse
         elseif (isset($this->data['ResponseCode']) && $this->data['ResponseCode'] == 1){
             return true;
         }
+        elseif (isset($this->data['ResponseCode']) && $this->data['ResponseCode'] == 0){
+            return true;
+        }
         return false;
     }
 
@@ -87,6 +90,9 @@ class Response extends AbstractResponse
         }
         elseif (isset($this->data['ReasonCodeDescription'])){
             return $this->data['ReasonCodeDescription'];
+        }
+        elseif (isset($this->data['ResponseCodeDescription'])){
+            return $this->data['ResponseCodeDescription'];
         }
         return null;
     }

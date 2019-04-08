@@ -2,6 +2,7 @@
 
 namespace Omnipay\FirstAtlanticCommerce;
 
+use Omnipay\FirstAtlanticCommerce\Message\Authorize3DSRequest;
 use Omnipay\FirstAtlanticCommerce\Message\AuthorizeRequest;
 use Omnipay\FirstAtlanticCommerce\Message\CaptureRequest;
 use Omnipay\FirstAtlanticCommerce\Message\PurchaseRequest;
@@ -19,6 +20,7 @@ class GatewayTest extends GatewayTestCase
     protected $gateway;
 
     private $purchaseOptions;
+    private $purchaseOptions3DS;
 
     public function setUp()
     {
@@ -37,8 +39,21 @@ class GatewayTest extends GatewayTestCase
             'testMode'=>true,
             'acquirerId'=>'464748',
         ];
-    }
 
+        //setup payment details
+        $this->purchaseOptions3DS = [
+            'amount'        => '10.00',
+            'currency'      => 'TTD',
+            'transactionId' => '12316',
+            'card'          => $this->getValidCard(),
+            'testMode'=>true,
+            'acquirerId'=>'464748',
+            'eciIndicatorValue'=>'05',
+            'cavvValue'=>'jBaKBOUrsH7lCBEAAAAyBzMAAAA=',
+            'transactionStain'=>'AgABAwEAAAMBBwIEAgkGCQHsFz8=',
+            'authenticationResult'=>'Y'
+        ];
+    }
 
     public function testAuthorize()
     {
@@ -57,6 +72,25 @@ class GatewayTest extends GatewayTestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals(1, $response->getReasonCode());
         $this->assertEquals('Transaction is approved.', $response->getMessage());
+    }
+
+    public function testAuthorizeThreeDS()
+    {
+        /**
+         * @var Authorize3DSRequest $request
+         */
+        $request = $this->gateway->authorize3DS($this->purchaseOptions3DS);
+        /**
+         * @var Response $response
+         */
+        $response = $request->send();
+
+        $this->assertInstanceOf('Omnipay\FirstAtlanticCommerce\Message\Authorize3DSRequest', $request);
+        $this->assertSame('10.00', $request->getAmount());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals(0, $response->getReasonCode());
+        $this->assertEquals('Success', $response->getMessage());
     }
 
     public function testCapture()
