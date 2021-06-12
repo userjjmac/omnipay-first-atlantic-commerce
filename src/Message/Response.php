@@ -104,7 +104,15 @@ class Response extends AbstractResponse
      */
     public function getCardReference()
     {
-        return array_key_exists('TokenizedPAN', $this->data) ? $this->data['TokenizedPAN'] : ( array_key_exists('Token', $this->data) ? $this->data['Token'] : null);
+        return ( 
+                array_keys_exists('CreditCardTransactionResults', $this->data) 
+                && array_keys_exists('TokenizedPAN', $this->data['CreditCardTransactionResults'])
+               )? $this->data['CreditCardTransactionResults']['TokenizedPAN'] : 
+                ( array_key_exists('TokenizedPAN', $this->data) ? $this->data['TokenizedPAN'] : 
+                    ( array_key_exists('Token', $this->data) ? $this->data['Token'] : 
+                        null 
+                    )
+                );
     }
 
 
